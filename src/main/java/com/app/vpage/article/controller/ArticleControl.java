@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,7 @@ public class ArticleControl {
 	ArticleService articleService;
 	
 	@GetMapping
+	@Cacheable(value="articlesCache")
 	public Page<?> getArticles(Pageable page, @RequestParam(name="author") Optional<String> author) {
 
 		return articleService.getArticles(page, author);
@@ -49,6 +53,7 @@ public class ArticleControl {
 	
 	
 	@PostMapping
+	@CacheEvict(value="articlesCache", allEntries = true)
 	public ResponseEntity<?> createArticle(@Valid @RequestBody Article articleDTO) {
 		
 		Article article = articleService.createArticle(articleDTO);
@@ -59,13 +64,15 @@ public class ArticleControl {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> changeArticle(@PathVariable Long id,
+	@CacheEvict(value="articlesCache", allEntries = true)
+	public ResponseEntity<?> UpdateArticle(@PathVariable Long id,
 							  @Valid @RequestBody Article article) {
 		
 		return ResponseEntity.ok(articleService.updateArticle(article, id));
 	}
 	
 	@DeleteMapping("/{id}")
+	@CacheEvict(value="articlesCache", allEntries = true)
 	public ResponseEntity<?> deleteArticle(@PathVariable @Valid Long id) {
 		articleService.deleteArticleById(id);
 		return ResponseEntity.ok().build();
