@@ -48,6 +48,17 @@ public class VpageExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(ex, new Erro(userMessage,menssageExcep), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 	
+	@ExceptionHandler(value= {NotContentException.class})
+	public ResponseEntity<Object> notContent(NotContentException ex, WebRequest request){
+		
+		String uMessege = "Não existe nada para mostrar aqui!!";
+		
+		String exMessege = ex.getCause() != null ? ex.getCause().toString():ex.toString();
+		
+		return handleExceptionInternal(ex, new Erro( uMessege, exMessege), new HttpHeaders(), HttpStatus.NO_CONTENT, request);
+	}
+	
+	
 	public static class Erro {
 		
 		private String messageUser;

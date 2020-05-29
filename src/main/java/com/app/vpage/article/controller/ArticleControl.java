@@ -1,14 +1,14 @@
 package com.app.vpage.article.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,15 +31,12 @@ public class ArticleControl {
 	ArticleService articleService;
 	
 	@GetMapping
-	public ResponseEntity<?> getArticles() {
-		
-		List<Article> listArticle = articleService.getAllArticles();
-		
-		return ObjectUtils.isEmpty(listArticle)?
-					ResponseEntity.noContent().build():
-					ResponseEntity.ok(listArticle);
+	public Page<?> getArticles(Pageable page, @RequestParam(name="author") Optional<String> author) {
+
+		return articleService.getArticles(page, author);
+
 	}
-	
+		
 	@GetMapping("/{id}")
 	public ResponseEntity<Article> getArticle(@PathVariable Long id) {
 		
@@ -47,7 +45,8 @@ public class ArticleControl {
 			return	article.isPresent()?				
 					ResponseEntity.ok(article.get()):
 					ResponseEntity.noContent().build();
-	}
+	}	
+	
 	
 	@PostMapping
 	public ResponseEntity<?> createArticle(@Valid @RequestBody Article articleDTO) {
@@ -60,14 +59,16 @@ public class ArticleControl {
 	}
 	
 	@PutMapping("/{id}")
-	public void changeArticle(@PathVariable Long id,
+	public ResponseEntity<?> changeArticle(@PathVariable Long id,
 							  @Valid @RequestBody Article article) {
-		articleService.updateArticle(article, id);
+		
+		return ResponseEntity.ok(articleService.updateArticle(article, id));
 	}
 	
-	@DeleteMapping
-	public void deleteArticle(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteArticle(@PathVariable @Valid Long id) {
 		articleService.deleteArticleById(id);
+		return ResponseEntity.ok().build();
 	}
 	
 }
