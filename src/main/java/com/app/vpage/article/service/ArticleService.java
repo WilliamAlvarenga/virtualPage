@@ -84,7 +84,7 @@ public class ArticleService {
 			return articles;
 		}
 		
-		throw new NotContentException("Não há registros!");
+		throw new NotContentException();
 	}
 
 	
@@ -96,6 +96,6 @@ public class ArticleService {
 			return articles;
 		}
 		
-		throw new NotContentException("Não há registros!");
+		throw new NotContentException();
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,13 @@ import com.app.vpage.article.model.Article;
 import com.app.vpage.article.service.ArticleService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/article")
 public class ArticleControl {
 
 	@Autowired
 	ArticleService articleService;
-	
+		
 	@GetMapping
 	@Cacheable(value="articlesCache")
 	public Page<?> getArticles(Pageable page, @RequestParam(name="author") Optional<String> author) {
