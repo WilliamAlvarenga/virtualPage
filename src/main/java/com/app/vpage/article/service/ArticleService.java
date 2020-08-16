@@ -77,7 +77,7 @@ public class ArticleService {
 
 	private Page<Article> getAllApprovedArticles(Pageable pageable) {
 		
-		Page<Article> articles = articleRepository.findApprovedArticle(pageable);
+		Page<Article> articles = articleRepository.findByAproved(true, pageable);
 		
 		
 		if(articles.getTotalElements()>0) {
@@ -90,7 +90,7 @@ public class ArticleService {
 	
 	private Page<Article> getArticleByAuthor(String author, Pageable pageable) {
 		
-		Page<Article> articles = articleRepository.findByAuthor(author, pageable);
+		Page<Article> articles = articleRepository.findByAuthorAproved(author, pageable);
 		
 		if(articles.getTotalElements()>0) {
 			return articles;
