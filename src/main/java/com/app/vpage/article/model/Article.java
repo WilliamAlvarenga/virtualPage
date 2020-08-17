@@ -8,9 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-
-import com.app.vpage.article.service.ArticleDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +20,7 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Setter
-	@NotEmpty(message = "Favor adicionar um título!")
+	@Setter	
 	private String title;
 	
 	@Column(name="made_date")
@@ -36,7 +32,6 @@ public class Article {
 	private String author;
 	
 	@Setter
-	@NotEmpty(message = "Texto obrigatório!")
 	private String text;
 	//private String image;
 	private Boolean aproved;

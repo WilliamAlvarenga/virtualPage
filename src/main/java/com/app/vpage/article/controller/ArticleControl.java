@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.app.vpage.article.model.Article;
-import com.app.vpage.article.service.ArticleDto;
+import com.app.vpage.article.model.ArticleDto;
 import com.app.vpage.article.service.ArticleService;
 
 @RestController
@@ -56,7 +56,7 @@ public class ArticleControl {
 	
 	@PostMapping
 	@CacheEvict(value="articlesCache", allEntries = true)
-	public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDto articleDTO) {
+	public ResponseEntity<?> createArticle(@RequestBody @Valid ArticleDto articleDTO) {
 		
 		Article article = articleService.createArticle(articleDTO);
 		
@@ -75,7 +75,7 @@ public class ArticleControl {
 	
 	@DeleteMapping("/{id}")
 	@CacheEvict(value="articlesCache", allEntries = true)
-	public ResponseEntity<?> deleteArticle(@PathVariable @Valid Long id) {
+	public ResponseEntity<?> deleteArticle(@PathVariable  Long id) {
 		articleService.deleteArticleById(id);
 		return ResponseEntity.ok().build();
 	}
