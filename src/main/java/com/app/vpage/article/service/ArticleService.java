@@ -37,14 +37,9 @@ public class ArticleService {
 	}
 	
 	
-	public Article createArticle(Article article) {
-		
-		if(!ObjectUtils.isEmpty(article.getId())) {
-			throw new BadRequestException("Id informado indevidamente: Informar id somente para atualização! ");
-		}
-		
-		article.setMadeDate(Calendar.getInstance());
-		article.setAproved(false);
+	public Article createArticle(ArticleDto articleDto) {		
+
+		Article article =  new Article().dtoToArticle(articleDto);						
 				
 		return articleRepository.save(article);
 		
@@ -53,13 +48,12 @@ public class ArticleService {
 	public Article updateArticle(Article article, Long id) {
 
 		Optional<Article>  savedArticle = articleRepository.findById(id);
-		
-		article.setMadeDate(savedArticle.get().getMadeDate());		
-		
+				
 		if(!savedArticle.isPresent()) {
 			throw new BadRequestException("Artigo não encontrado na base de dados");
 		}
 				
+		article.setUpdated(Calendar.getInstance());		
 		BeanUtils.copyProperties(article, savedArticle.get(),"id");
 		
 		return articleRepository.save(savedArticle.get());

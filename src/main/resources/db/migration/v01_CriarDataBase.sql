@@ -5,5 +5,7 @@ CREATE TABLE  article  (
    aproved  bit(1) DEFAULT NULL,
    text  varchar(255) DEFAULT NULL,
    author  varchar(50) DEFAULT NULL,
+   updated datetime DEFAULT NULL,
   PRIMARY KEY ( id )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
