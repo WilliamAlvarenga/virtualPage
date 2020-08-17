@@ -23,8 +23,20 @@ public class VpageExceptionHandler extends ResponseEntityExceptionHandler{
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		
-		return super.handleMethodArgumentNotValid(ex, headers, status, request);
+
+		StringBuffer msgs = new StringBuffer();
+
+		ex.getBindingResult().getFieldErrors().stream().forEach(erro -> {
+			msgs.append(" ");
+			msgs.append(erro.getDefaultMessage());
+		});
+
+		String userMessage = "Erro: Parametros inválidos! " + String.valueOf(msgs);
+
+		String menssageExcep = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
+
+		return handleExceptionInternal(ex, new Erro(userMessage, menssageExcep), headers, HttpStatus.BAD_REQUEST,
+				request);
 	}
 	
 	
