@@ -3,6 +3,7 @@ package com.app.vpage.article.model;
 
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class ArticleDto {
 	private String author;
 	
 	@NotEmpty(message = "Texto obrigatório!")
+	@Size(min= 3, max =5000 , message = "Maximo de caractere para texto é 5000!")
 	private String text;
 
 }
