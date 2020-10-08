@@ -1,4 +1,4 @@
-package com.app.vpage.execptionhandler;
+package com.app.vpage.execptionhandler.execption;
 
 public class NotContentException extends RuntimeException {
 	

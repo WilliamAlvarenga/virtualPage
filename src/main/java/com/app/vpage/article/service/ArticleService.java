@@ -13,8 +13,8 @@ import org.springframework.util.ObjectUtils;
 import com.app.vpage.article.model.Article;
 import com.app.vpage.article.model.ArticleDto;
 import com.app.vpage.article.repository.ArticleRepository;
-import com.app.vpage.execptionhandler.BadRequestException;
-import com.app.vpage.execptionhandler.NotContentException;
+import com.app.vpage.execptionhandler.execption.BadRequestException;
+import com.app.vpage.execptionhandler.execption.NotContentException;
 
 @Service
 public class ArticleService {
