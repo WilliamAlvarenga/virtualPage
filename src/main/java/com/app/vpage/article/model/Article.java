@@ -37,8 +37,9 @@ public class Article {
 	private Boolean aproved;
 	
 	public  Article dtoToArticle(ArticleDto articleDto) {
-				
-		this.aproved = false;
+		//atualizar para false quando implantar login e roles		
+		//this.aproved = false;
+		this.aproved = true;
 		this.madeDate = Calendar.getInstance();
 
 		this.title = articleDto.getTitle();

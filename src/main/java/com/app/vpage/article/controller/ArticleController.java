@@ -30,7 +30,7 @@ import com.app.vpage.article.service.ArticleService;
 @RestController
 @CrossOrigin
 @RequestMapping("/article")
-public class ArticleControl {
+public class ArticleController {
 
 	@Autowired
 	ArticleService articleService;
